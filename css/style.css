@@ -1,9 +1,9 @@
-#asdf {
+#main-content {
   margin-top: 3rem;
 }
 
 @media only screen and (min-width: 768px) {
-  #asdf {
+  #main-content {
     margin-top: 0px;
     padding-top: 25px;
     transform: translate(0px, calc(50vh - 379.33px / 2));
