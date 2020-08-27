@@ -2,9 +2,14 @@
   margin-top: 3rem;
 }
 
+#project-lists {
+  margin-bottom: 3rem;
+}
+
 @media only screen and (min-width: 768px) {
   #main-content {
     margin-top: 0px;
+    margin-bottom: 0px;
     padding-top: 25px;
     transform: translate(0px, calc(50vh - 379.33px / 2));
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
