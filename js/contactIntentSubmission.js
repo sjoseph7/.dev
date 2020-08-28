@@ -8,7 +8,8 @@ const backEndUri = `https://sjoseph7-dev-back-end.herokuapp.com`;
 
 fetch(`${backEndUri}/api/v1/page-views`, { method: "POST" });
 
-async function submitContactIntent() {
+async function submitContactIntent(e) {
+  e.preventDefault();
   submitBtn.disabled = true;
   showButtonLoading(true);
   try {
