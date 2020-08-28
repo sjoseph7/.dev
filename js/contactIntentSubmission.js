@@ -4,7 +4,7 @@ const submissionErrorText = document.getElementById("submissionError");
 const submissionSuccessText = document.getElementById("submissionSuccess");
 const submitBtn = document.getElementById("submit");
 const btnStatusIndicator = document.getElementById("btnStatus");
-const backEndUri = `https://sjoseph7-dev-back-end.herokuapp.com/`;
+const backEndUri = `https://sjoseph7-dev-back-end.herokuapp.com`;
 
 fetch(`${backEndUri}/api/v1/page-views`, { method: "POST" });
 
