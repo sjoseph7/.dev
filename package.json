@@ -1,0 +1,25 @@
+{
+  "name": "sjoseph7-dev",
+  "version": "2.0.0",
+  "description": "There's really not much to say... just go check out the site: [sjoseph7.dev](https://sjoseph7.dev)",
+  "main": "index.js",
+  "scripts": {
+    "lambda-build": "netlify-lambda build functions",
+    "lambda-serve": "netlify-lambda serve functions"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sjoseph7/.dev.git"
+  },
+  "author": "sjoseph7",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sjoseph7/.dev/issues"
+  },
+  "homepage": "https://github.com/sjoseph7/.dev#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "mailgun-js": "^0.22.0",
+    "netlify-lambda": "^2.0.1"
+  }
+}

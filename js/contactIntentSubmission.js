@@ -4,9 +4,11 @@ const submissionErrorText = document.getElementById("submissionError");
 const submissionSuccessText = document.getElementById("submissionSuccess");
 const submitBtn = document.getElementById("submit");
 const btnStatusIndicator = document.getElementById("btnStatus");
-const backEndUri = `https://sjoseph7-dev-back-end.herokuapp.com`;
 
-fetch(`${backEndUri}/api/v1/page-views`, { method: "POST" });
+// Development endpoint
+// const serverlessApiEndpoint = `http://localhost:9000/sendEmail`;
+// Production endpoint
+const serverlessApiEndpoint = `/.netlify/functions/sendEmail`;
 
 async function submitContactIntent(e) {
   e.preventDefault();
@@ -15,23 +17,27 @@ async function submitContactIntent(e) {
   try {
     // Send submission data to back end
     const [email, message] = getSubmission();
-    const res = await fetch(`${backEndUri}/api/v1/submissions`, {
+    const res = await fetch(serverlessApiEndpoint, {
       method: "POST",
-      mode: "cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, message })
+      body: JSON.stringify({ email, message }),
     });
 
     // Interpret data
     const data = await res.json();
+
     if (!data.success) {
       // Fail
       submitBtn.disabled = false;
-      showValidationText(capitalizeFirstLetter(data.error), "fail");
+      if (res.status === 400) {
+        const unknownErrorMsg =
+          "Please double check your submission for errors and try again.";
+        showValidationText(data.error || unknownErrorMsg, "fail");
+      } else {
+        throw Error();
+      }
     } else {
       // Success!
       showValidationText("Submission successful!", "success");
-      clearSubmissionForm();
       submitBtn.disabled = true;
 
       // Close Modal
@@ -43,11 +49,13 @@ async function submitContactIntent(e) {
       }, 1500);
     }
   } catch (err) {
-    // Timeout
-    showValidationText(
-      "Unable to submit aright now... try again later.",
-      "fail"
-    );
+    console.error(err);
+
+    // Most likely a network request timeout
+    const caughtErrorMsg = "Unable to submit right now... try again later.";
+    showValidationText(caughtErrorMsg, "fail");
+
+    submitBtn.disabled = false;
   } finally {
     showButtonLoading(false);
   }
@@ -75,15 +83,16 @@ function capitalizeFirstLetter(word = "") {
 }
 
 function showValidationText(text, type = "success") {
+  const Text = capitalizeFirstLetter(text);
   if (type === "success") {
     submissionErrorText.classList.add("d-none");
     submissionErrorText.innerText = "";
 
     submissionSuccessText.classList.remove("d-none");
-    submissionSuccessText.innerText = text;
+    submissionSuccessText.innerText = Text;
   } else if (type === "fail") {
     submissionErrorText.classList.remove("d-none");
-    submissionErrorText.innerText = text;
+    submissionErrorText.innerText = Text;
 
     submissionSuccessText.classList.add("d-none");
     submissionSuccessText.innerText = "";
@@ -91,11 +100,10 @@ function showValidationText(text, type = "success") {
 }
 
 function showButtonLoading(loading = false) {
-  if (!loading) {
-    btnStatusIndicator.innerHTML = '<i class="far fa-paper-plane"></i>';
-  } else {
-    btnStatusIndicator.innerHTML = `<div class="spinner-border spinner-border-sm" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>`;
-  }
+  const readyBtn = `<i class="far fa-paper-plane"></i>`;
+  const loadingBtn = `<div class="spinner-border spinner-border-sm" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>`;
+
+  btnStatusIndicator.innerHTML = loading ? loadingBtn : readyBtn;
 }
