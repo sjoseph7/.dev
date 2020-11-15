@@ -19,7 +19,7 @@ async function submitContactIntent(e) {
       method: "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, message })
+      body: JSON.stringify({ email, message }),
     });
 
     // Interpret data
@@ -45,11 +45,12 @@ async function submitContactIntent(e) {
   } catch (err) {
     // Timeout
     showValidationText(
-      "Unable to submit aright now... try again later.",
+      "Unable to submit right now... try again later.",
       "fail"
     );
   } finally {
     showButtonLoading(false);
+    submitBtn.disabled = false;
   }
 }
 
