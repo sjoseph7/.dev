@@ -48,9 +48,9 @@ async function submitContactIntent(e) {
       "Unable to submit right now... try again later.",
       "fail"
     );
+    submitBtn.disabled = false;
   } finally {
     showButtonLoading(false);
-    submitBtn.disabled = false;
   }
 }
 
