@@ -4,6 +4,8 @@ const { MAILGUN_API_KEY, MAILGUN_DOMAIN, EMAIL_TO } = process.env;
 const mailgun = require("mailgun-js");
 const mg = mailgun({ apiKey: MAILGUN_API_KEY, domain: MAILGUN_DOMAIN });
 
+const MAX_CHARACTER_LIMIT = 10000;
+
 // Light-weight wrapper around netlify callback function
 function replyWith(callback) {
   // Development headers
@@ -37,19 +39,10 @@ exports.handler = function (event, context, callback) {
 
   // Confirm email address is valid
   if (!isValidEmail(email)) return reply("Email address is not valid.");
-  // return callback(null, {
-  //   statusCode: 400,
-  //   headers,
-  //   body: JSON.stringify({
-  //     success: false,
-  //     data: { email, message },
-  //     error: "Email address is not valid.",
-  //   }),
-  // });
 
-  // Confirm message is no longer than 10000 characters
-  if (message.length > 10000)
-    return reply("Message exceeds 10000 character limit.");
+  // Confirm message is no longer than maximum allowed characters
+  if (message.length > MAX_CHARACTER_LIMIT)
+    return reply(`Message exceeds ${MAX_CHARACTER_LIMIT} character limit.`);
 
   // Email payload
   const emailPayload = {
