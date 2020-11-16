@@ -17,6 +17,8 @@ Specs:
 
 ## Serverless on Netlify
 
+https://www.youtube.com/watch?v=Fx3ZGy-mbV4
+
 https://dev.to/twilio/how-to-send-text-messages-from-your-static-site-using-netlify-twilio-and-serverless-functions-24ci/
 
 https://www.youtube.com/watch?v=drJwMlD9Mjo&list=TLPQMTUxMTIwMjA_F_XBKML1Lw&index=2
