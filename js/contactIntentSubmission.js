@@ -58,7 +58,6 @@ async function submitContactIntent(e) {
     submitBtn.disabled = false;
   } finally {
     showButtonLoading(false);
-    submitBtn.disabled = false;
   }
 }
 
